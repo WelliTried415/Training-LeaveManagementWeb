@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using Training_LeaveManagementWeb.Configurations;
 using Training_LeaveManagementWeb.Data;
+using Training_LeaveManagementWeb.Repositories;
+using Training_LeaveManagementWeb.Contracts;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
+builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
 
 builder.Services.AddAutoMapper(typeof(MapperConfig));
 
