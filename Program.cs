@@ -5,6 +5,8 @@ using Training_LeaveManagementWeb.Configurations;
 using Training_LeaveManagementWeb.Data;
 using Training_LeaveManagementWeb.Repositories;
 using Training_LeaveManagementWeb.Contracts;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Training_LeaveManagementWeb.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +17,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<Employee>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddTransient<IEmailSender>(s => new EmailSender("localhost", 25, "no-reply@leavemanagement.com"));
 
 builder.Services.AddScoped(typeof(GenericRepository<>), typeof(GenericRepository<>));
 builder.Services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();

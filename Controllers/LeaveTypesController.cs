@@ -3,15 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Training_LeaveManagementWeb.Constants;
 using Training_LeaveManagementWeb.Contracts;
 using Training_LeaveManagementWeb.Data;
 using Training_LeaveManagementWeb.Models;
 
 namespace Training_LeaveManagementWeb.Controllers
 {
+    [Authorize(Roles = Roles.Administrator)] //this line prevents anyone that is not logged in from using the entirety of the LeaveTypesController, Can be used above certain methods to only make it applicable to those methods
     public class LeaveTypesController : Controller
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
@@ -45,6 +48,7 @@ namespace Training_LeaveManagementWeb.Controllers
         }
 
         // GET: LeaveTypes/Create
+        
         public IActionResult Create()
         {
             return View();
@@ -55,6 +59,7 @@ namespace Training_LeaveManagementWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Create(LeaveTypeVM leaveTypeVM)
         {
             if (ModelState.IsValid)
@@ -67,6 +72,7 @@ namespace Training_LeaveManagementWeb.Controllers
         }
 
         // GET: LeaveTypes/Edit/5
+        
         public async Task<IActionResult> Edit(int? id)
         {
 
@@ -85,6 +91,7 @@ namespace Training_LeaveManagementWeb.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> Edit(int id, LeaveTypeVM leaveTypeVM)
         {
             if (id != leaveTypeVM.Id)
@@ -120,6 +127,7 @@ namespace Training_LeaveManagementWeb.Controllers
         // POST: LeaveTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             leaveTypeRepository.DeleteAsync(id);

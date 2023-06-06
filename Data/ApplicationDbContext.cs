@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Training_LeaveManagementWeb.Configurations.Entities;
 
 namespace Training_LeaveManagementWeb.Data
 {
@@ -8,6 +9,14 @@ namespace Training_LeaveManagementWeb.Data
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new RoleSeedConfiguration());
+            builder.ApplyConfiguration(new UserSeedConfiguration());
+            builder.ApplyConfiguration(new UserRoleSeedConfiguration());
         }
 
         public DbSet<LeaveType> LeaveTypes { get; set; } //create collection of these types, in the database it means create a table called LeaveTypes, modeled after LeaveType
