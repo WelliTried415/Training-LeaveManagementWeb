@@ -19,11 +19,13 @@ namespace Training_LeaveManagementWeb.Controllers
     {
         private readonly ILeaveTypeRepository leaveTypeRepository;
         private readonly IMapper mapper;
+        private readonly ILeaveAllocationRepository leaveAllocationRepository;
 
-        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository, IMapper mapper)
+        public LeaveTypesController(ILeaveTypeRepository leaveTypeRepository, IMapper mapper, ILeaveAllocationRepository leaveAllocationRepository)
         {
             this.leaveTypeRepository = leaveTypeRepository;
             this.mapper = mapper;
+            this.leaveAllocationRepository = leaveAllocationRepository;
         }
 
         // GET: LeaveTypes
@@ -108,7 +110,7 @@ namespace Training_LeaveManagementWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!await LeaveTypeExists(leaveTypeVM.Id))
+                    if (!await leaveTypeRepository.Exists(leaveTypeVM.Id))
                     {
                         return NotFound();
                     }
@@ -122,21 +124,24 @@ namespace Training_LeaveManagementWeb.Controllers
             return View(leaveTypeVM);
         }
 
-     
-
         // POST: LeaveTypes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            leaveTypeRepository.DeleteAsync(id);
+            await leaveTypeRepository.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private async Task<bool> LeaveTypeExists(int id)
+        
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AllocateLeave(int id)
         {
-            return await leaveTypeRepository.Exists(id);
+            await leaveAllocationRepository.LeaveAllocation(id);
+            return RedirectToAction(nameof(Index));
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Training_LeaveManagementWeb.Configurations.Entities
                 {
                     Id = "e5c21ffb - c0d2 - 478a - bf0c - 2c1e2be598e5",
                     Name = Roles.User,
-                    NormalizedName = Roles.Administrator.ToUpper()
+                    NormalizedName = Roles.User.ToUpper()
                 }
             );
         }
