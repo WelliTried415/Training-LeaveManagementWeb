@@ -90,10 +90,10 @@ namespace Training_LeaveManagementWeb.Areas.Identity.Pages.Account
             public string Lastname { get; set; }
 
             [DataType(DataType.Date)]
-            public DateTime DateOfBirth { get; set; }
+            public DateTime? DateOfBirth { get; set; }
 
             [DataType(DataType.Date)]
-            public DateTime DateJoined { get; set; }
+            public DateTime? DateJoined { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -134,8 +134,8 @@ namespace Training_LeaveManagementWeb.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 user.Firstname = Input.Firstname;
                 user.Lastname = Input.Lastname;
-                user.DateOfBirth = Input.DateOfBirth;
-                user.DateJoined = Input.DateJoined;
+                user.DateOfBirth = Input.DateOfBirth ?? default;
+                user.DateJoined = Input.DateJoined ?? default;
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
