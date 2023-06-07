@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Training_LeaveManagementWeb.Configurations.Entities;
+using Training_LeaveManagementWeb.Models;
 
 namespace Training_LeaveManagementWeb.Data
 {
