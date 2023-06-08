@@ -9,13 +9,18 @@ namespace Training_LeaveManagementWeb.Models
     {
         [Required]
         [Display(Name = "Start Date")]
+        [DisplayFormat(DataFormatString = "{0:yyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
         public DateTime? StartDate { get; set; }
         
         [Required]
         [Display(Name = "End Date")]
+        [DisplayFormat(DataFormatString = "{0:yyy-MM-dd}")]
+        [DataType(DataType.DateTime)]
         public DateTime? EndDate { get; set; }
 
         [Required]
+        [Display(Name = "Leave Type")]
         public int LeaveTypeId { get; set; }
         public SelectList? LeaveTypes { get; set; }
 
